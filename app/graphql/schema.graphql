@@ -21,6 +21,36 @@ An ISO 8601-encoded datetime
 scalar ISO8601DateTime
 
 type Mutation {
+  """
+  Login for users
+  """
+  login(email: String!, password: String!): User
+
+  """
+  Logout for users
+  """
+  logout: Boolean
+  resetPassword(password: String!, passwordConfirmation: String!, resetPasswordToken: String!): Boolean
+
+  """
+  Send password reset instructions to users email
+  """
+  sendResetPasswordInstructions(email: String!): Boolean
+
+  """
+  Sign up for users
+  """
+  signUp(email: String!, name: String!, password: String!, passwordConfirmation: String!): User
+
+  """
+  JWT token login
+  """
+  tokenLogin: User
+
+  """
+  Update user
+  """
+  updateUser(password: String, passwordConfirmation: String): User
 }
 
 type Query {
@@ -38,6 +68,7 @@ type User implements ActiveRecord {
   email: String!
   id: ID!
   name: String!
+  token: String!
 
   """
   The date and time the record was last updated
