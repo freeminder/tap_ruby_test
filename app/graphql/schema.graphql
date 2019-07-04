@@ -1,0 +1,46 @@
+interface ActiveRecord {
+  """
+  The date and time when then record was created
+  """
+  createdAt: ISO8601DateTime!
+
+  """
+  A unique identifier for the record
+  """
+  id: ID!
+
+  """
+  The date and time the record was last updated
+  """
+  updatedAt: ISO8601DateTime!
+}
+
+"""
+An ISO 8601-encoded datetime
+"""
+scalar ISO8601DateTime
+
+type Mutation {
+}
+
+type Query {
+  """
+  Gets the specified user
+  """
+  user(id: ID!): User
+}
+
+type User implements ActiveRecord {
+  """
+  The date and time when then record was created
+  """
+  createdAt: ISO8601DateTime!
+  email: String!
+  id: ID!
+  name: String!
+
+  """
+  The date and time the record was last updated
+  """
+  updatedAt: ISO8601DateTime!
+}

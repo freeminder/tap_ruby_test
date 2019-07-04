@@ -9,5 +9,7 @@ class User < ApplicationRecord
   has_many :roles, -> { distinct }, through: :assignments
   has_many :locations, -> { distinct }, through: :assignments
 
+  # before_invitation_created :update_assignments
+
   validates :email, presence: true, uniqueness: true
 end

@@ -64,3 +64,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'devise'
 gem 'devise_invitable'
 gem 'awesome_print'
+gem "graphql", "~> 1.9.0"
+gem 'graphiql-rails', group: :development
