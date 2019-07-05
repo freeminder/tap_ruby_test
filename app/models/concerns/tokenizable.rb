@@ -1,11 +1,11 @@
-require 'active_support/concern'
+require "active_support/concern"
 
 module Tokenizable
   extend ActiveSupport::Concern
 
   included do
     def token
-      token, payload = user_encoder.call(
+      token, _payload = user_encoder.call(
         self, devise_scope, aud_headers
       )
       token
@@ -25,9 +25,9 @@ module Tokenizable
   end
 
   private def token_headers
-    { 
-      'Accept' => 'application/json', 
-      'Content-Type' => 'application/json' 
+    {
+      "Accept" => "application/json",
+      "Content-Type" => "application/json",
     }
   end
 end

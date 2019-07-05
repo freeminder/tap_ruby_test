@@ -1,7 +1,6 @@
 class MutationType < Types::BaseObject
   field :delete_user, mutation: DeleteUserMutation
 
-  
   ## LOGIN
   field :login, Outputs::UserType, null: true do
     description "Login for users"
@@ -10,12 +9,12 @@ class MutationType < Types::BaseObject
   end
   def login(email:, password:)
     user = User.find_for_authentication(email: email)
-    return nil if !user
-    
-    is_valid_for_auth = user.valid_for_authentication?{
+    return nil unless user
+
+    is_valid_for_auth = user.valid_for_authentication? {
       user.valid_password?(password)
     }
-    return is_valid_for_auth ? user : nil
+    is_valid_for_auth ? user : nil
   end
 
   ## TOKEN-LOGIN
@@ -34,7 +33,7 @@ class MutationType < Types::BaseObject
     if context[:current_user]
       context[:current_user].update(jti: SecureRandom.uuid)
       return true
-    end 
+    end
     false
   end
 
@@ -47,11 +46,11 @@ class MutationType < Types::BaseObject
   end
 
   def update_user(
-      password: context[:current_user] ? context[:current_user].password : '',
-      password_confirmation: context[:current_user] ? context[:current_user].password_confirmation : ''
-    )
+    password: context[:current_user] ? context[:current_user].password : "",
+    password_confirmation: context[:current_user] ? context[:current_user].password_confirmation : ""
+  )
     user = context[:current_user]
-    return nil if !user
+    return nil unless user
     user.update!(
       password: password,
       password_confirmation: password_confirmation
@@ -68,9 +67,9 @@ class MutationType < Types::BaseObject
   end
   def sign_up(email:, password:, password_confirmation:, name:)
     User.create(
-      email: email, 
-      password: password, 
-      password_confirmation: password_confirmation, 
+      email: email,
+      password: password,
+      password_confirmation: password_confirmation,
       name: name
     )
   end
@@ -81,7 +80,7 @@ class MutationType < Types::BaseObject
   end
   def send_reset_password_instructions(email:)
     user = User.find_by_email(email)
-    return true if !user
+    return true unless user
     user.send_reset_password_instructions
     true
   end
@@ -93,9 +92,9 @@ class MutationType < Types::BaseObject
   end
   def reset_password(password:, password_confirmation:, reset_password_token:)
     user = User.with_reset_password_token(reset_password_token)
-    return false if !user
+    return false unless user
     user.reset_password(password, password_confirmation)
-  end  
+  end
 
   #
   # uncomment for unlock instructions

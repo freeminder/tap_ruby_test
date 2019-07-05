@@ -16,15 +16,14 @@ ActiveRecord::Schema.define(version: 2019_07_04_185134) do
   enable_extension "plpgsql"
 
   create_table "assignments", force: :cascade do |t|
+    t.string "assignable_type"
+    t.bigint "assignable_id"
     t.bigint "project_id"
     t.bigint "user_id"
-    t.bigint "role_id"
-    t.bigint "location_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["location_id"], name: "index_assignments_on_location_id"
+    t.index ["assignable_type", "assignable_id"], name: "index_assignments_on_assignable_type_and_assignable_id"
     t.index ["project_id"], name: "index_assignments_on_project_id"
-    t.index ["role_id"], name: "index_assignments_on_role_id"
     t.index ["user_id"], name: "index_assignments_on_user_id"
   end
 
@@ -73,8 +72,6 @@ ActiveRecord::Schema.define(version: 2019_07_04_185134) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "assignments", "locations"
   add_foreign_key "assignments", "projects"
-  add_foreign_key "assignments", "roles"
   add_foreign_key "assignments", "users"
 end

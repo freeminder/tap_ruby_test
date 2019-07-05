@@ -1,7 +1,9 @@
 class ApplicationController < ActionController::Base
   def index
-    respond_to do |format|
-      format.any { render html: "Hello there!" }
-    end 
+    render json: {message: "Hello there!"}, status: :ok
+  end
+
+  def not_found
+    render json: {errors: "not found"}, status: :not_found
   end
 end

@@ -1,5 +1,7 @@
 # TAP Ruby Test
 
+[![Ruby Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://github.com/testdouble/standard)
+
 ## Task
 
 Create Rails application for inviting new users with Devise and DeviseInvitable. Main feature of
@@ -131,6 +133,13 @@ mutation deleteUser {
     success
   }
 }
+```
+
+## Tests
+
+* Syntax/Lint:
+```
+rake standard
 ```
 
 ## License

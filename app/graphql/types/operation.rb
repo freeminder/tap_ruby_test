@@ -14,7 +14,7 @@ module Types
       @input = OpenStruct.new(args)
       rescue_resolver do
         if respond_to?(:authorized_resolve)
-          authorize
+          authorize(authorized_resolve)
           authorized_resolve
         else
           resolve

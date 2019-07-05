@@ -13,6 +13,7 @@ class ApplicationPolicy
   private
 
   def user_is_admin_or_owns_the_record?
+    return false if user.nil?
     user.roles.where(name: "Admin").any? || record.users.include?(user)
   end
 end
