@@ -20,6 +20,22 @@ An ISO 8601-encoded datetime
 """
 scalar ISO8601DateTime
 
+type Location implements ActiveRecord {
+  """
+  The date and time when then record was created
+  """
+  createdAt: ISO8601DateTime!
+  id: ID!
+  name: String!
+  projects: [Project!]
+
+  """
+  The date and time the record was last updated
+  """
+  updatedAt: ISO8601DateTime!
+  users: [User!]
+}
+
 type Mutation {
   """
   Login for users
@@ -53,11 +69,79 @@ type Mutation {
   updateUser(password: String, passwordConfirmation: String): User
 }
 
+type Project implements ActiveRecord {
+  """
+  The date and time when then record was created
+  """
+  createdAt: ISO8601DateTime!
+  id: ID!
+  locations: [Location!]
+  name: String!
+  roles: [Role!]
+
+  """
+  The date and time the record was last updated
+  """
+  updatedAt: ISO8601DateTime!
+  users: [User!]
+}
+
 type Query {
+  """
+  Gets the specified location
+  """
+  location(id: ID!): Location
+
+  """
+  Gets all locations for current user
+  """
+  locations: [Location!]
+
+  """
+  Gets the specified project
+  """
+  project(id: ID!): Project
+
+  """
+  Gets all projects for current user
+  """
+  projects: [Project!]
+
+  """
+  Gets the specified role
+  """
+  role(id: ID!): Role
+
+  """
+  Gets all roles for current user
+  """
+  roles: [Role!]
+
   """
   Gets the specified user
   """
   user(id: ID!): User
+
+  """
+  Gets all users
+  """
+  users: [User!]
+}
+
+type Role implements ActiveRecord {
+  """
+  The date and time when then record was created
+  """
+  createdAt: ISO8601DateTime!
+  id: ID!
+  name: String!
+  projects: [Project!]
+
+  """
+  The date and time the record was last updated
+  """
+  updatedAt: ISO8601DateTime!
+  users: [User!]
 }
 
 type User implements ActiveRecord {
@@ -67,7 +151,10 @@ type User implements ActiveRecord {
   createdAt: ISO8601DateTime!
   email: String!
   id: ID!
+  locations: [Location!]
   name: String!
+  projects: [Project!]
+  roles: [Role!]
   token: String!
 
   """

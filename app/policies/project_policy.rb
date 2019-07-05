@@ -1,0 +1,2 @@
+class ProjectPolicy < DefaultPolicy
+end

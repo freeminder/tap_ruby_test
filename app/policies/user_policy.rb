@@ -1,0 +1,2 @@
+class UserPolicy < DefaultPolicy
+end

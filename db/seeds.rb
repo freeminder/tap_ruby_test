@@ -8,9 +8,8 @@
 end
 
 [
-  "Admin", 
-  "User", 
-  "Guest"
+  "Admin",
+  "User"
 ].each do |role_name|
   role = Role.create(name: role_name)
   puts "Created role #{role_name}"
