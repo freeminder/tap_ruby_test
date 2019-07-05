@@ -25,6 +25,7 @@ cp .env.sample .env
 bundle exec rake secret # and update this newly generated secret in .env
 bundle install
 rake db:create db:migrate
+rails db:seed
 ```
 
 ## Run instructions
@@ -39,7 +40,7 @@ Then set "Authorization" header to this value in GraphQL client.
 
 ## GraphQL queries' examples
 
-* Get a particular user (applies for current user or Admin only):
+* Get the specified user (applies for current user or Admin only):
 ```
 query user {
   user(id: 1) {
@@ -81,7 +82,7 @@ query users {
 }
 ```
 
-* Get a particular project:
+* Get the specified project:
 ```
 query project {
   project(id: 2) {
@@ -117,6 +118,17 @@ query locations {
   locations {
     id
     name
+  }
+}
+```
+
+## GraphQL mutations' examples
+
+* Delete the specified user and destroy all belonging resources (applies for current user or Admin only):
+```
+mutation deleteUser {
+  deleteUser(input: {id: 3}) {
+    success
   }
 }
 ```

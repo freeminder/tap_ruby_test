@@ -1,4 +1,6 @@
 class MutationType < Types::BaseObject
+  field :delete_user, mutation: DeleteUserMutation
+
   
   ## LOGIN
   field :login, Outputs::UserType, null: true do
