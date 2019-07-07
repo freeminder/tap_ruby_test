@@ -1,4 +1,8 @@
 class MutationType < Types::BaseObject
+  field :invite_user, mutation: InviteUserMutation
+  field :create_project, mutation: CreateProjectMutation
+  field :add_user_to_project, mutation: AddUserToProjectMutation
+  field :remove_user_from_project, mutation: RemoveUserFromProjectMutation
   field :delete_user, mutation: DeleteUserMutation
 
   ## LOGIN

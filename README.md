@@ -40,7 +40,37 @@ Get user's JSON Web Token from query or by running in rails console: ```User.fir
 
 Then set "Authorization" header to this value in GraphQL client.
 
-## GraphQL queries' examples
+## GraphQL request examples
+
+* Invite user by email, name, project, role and location (only Admin can invite new users):
+```
+mutation inviteUser {
+  inviteUser(input: {
+    email: "user4@example.com",
+    name: "Jet Lee",
+    projectId: 3,
+    roleId: 1,
+    locationId: 10
+  }) {
+    success
+    errors {
+      message
+    }
+  }
+}
+```
+
+* Sign in:
+```
+mutation login {
+  login(email: "user1@example.com", password: "qwertyIsB@dP@$$w0rd!") {
+      id
+      name
+      email
+      token
+  }
+}
+```
 
 * Get the specified user (applies for current user or Admin only):
 ```
@@ -64,7 +94,7 @@ query user {
 }
 ```
 
-* Get all users with assigned projects, roles and locations (applies for Admin only):
+* Get all users with assigned projects, roles and locations (Admin only):
 ```
 query users {
   users {
@@ -84,7 +114,38 @@ query users {
 }
 ```
 
-* Get the specified project:
+* Create a project (Admin only):
+```
+mutation createProject {
+  createProject(input: {
+    name: "ProjectA2"
+  }) {
+    success
+    errors {
+      message
+    }
+  }
+}
+```
+
+* Add a user with specified role and location to the project (Admin only):
+```
+mutation addUserToProject {
+  addUserToProject(input: {
+    userId: 3
+    projectId: 2,
+    roleId: 1,
+    locationId: 10
+  }) {
+    success
+    errors {
+      message
+    }
+  }
+}
+```
+
+* Get the specified project (will return resource object only if user is Admin or assigned to this project):
 ```
 query project {
   project(id: 2) {
@@ -124,9 +185,19 @@ query locations {
 }
 ```
 
-## GraphQL mutations' examples
+* Remove the specified user from project with this all location associations and everything else (Admin only):
+```
+mutation removeUserFromProject {
+  removeUserFromProject(input: {
+    userId: 3,
+    projectId: 3
+  }) {
+    success
+  }
+}
+```
 
-* Delete the specified user and destroy all belonging resources (applies for current user or Admin only):
+* Delete the specified user and destroy all belonging resources (current user or Admin only):
 ```
 mutation deleteUser {
   deleteUser(input: {id: 3}) {
