@@ -213,6 +213,11 @@ mutation deleteUser {
 rake standard
 ```
 
+* Tests:
+```
+rspec -fd
+```
+
 ## License
 
 Please refer to [LICENSE](LICENSE).
