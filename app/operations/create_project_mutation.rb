@@ -11,7 +11,7 @@ class CreateProjectMutation < Types::BaseMutation
     if result.errors.empty?
       {success: result, errors: []}
     else
-      {success: false, errors: result.errors}
+      {success: false, errors: result.errors.full_messages}
     end
   end
 end

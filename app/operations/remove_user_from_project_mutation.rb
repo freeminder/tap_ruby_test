@@ -14,7 +14,7 @@ class RemoveUserFromProjectMutation < Types::BaseMutation
     if project.remove_user(user)
       {success: true, errors: []}
     else
-      {success: false, errors: project.errors}
+      {success: false, errors: project.errors.full_messages}
     end
   end
 end

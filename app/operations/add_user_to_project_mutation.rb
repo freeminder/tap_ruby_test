@@ -9,16 +9,17 @@ class AddUserToProjectMutation < Types::BaseMutation
   policy UserPolicy, :admin?
 
   def resolve
-    result = Assignment.create(user_id: input.user_id, project_id: input.project_id)
-    return {success: false, errors: result.errors} if result.errors.any?
-    result = Assignment.create(user_id: input.user_id, project_id: input.project_id, assignable_type: "Role", assignable_id: input.role_id)
-    return {success: false, errors: result.errors} if result.errors.any?
-    result = Assignment.create(user_id: input.user_id, project_id: input.project_id, assignable_type: "Location", assignable_id: input.location_id)
+    results = []
+    results << Assignment.new(user_id: input.user_id, project_id: input.project_id)
+    results << Assignment.new(user_id: input.user_id, project_id: input.project_id, assignable_type: "Role", assignable_id: input.role_id)
+    results << Assignment.new(user_id: input.user_id, project_id: input.project_id, assignable_type: "Location", assignable_id: input.location_id)
 
-    if result.errors.empty?
-      {success: true, errors: []}
-    else
-      {success: false, errors: result.errors}
+    results.each do |result|
+      result.validate
+      return {success: false, errors: result.errors.full_messages} if result.errors.any?
     end
+
+    results.each { |result| result.save }
+    {success: true, errors: []}
   end
 end

@@ -5,7 +5,6 @@ class MutationType < Types::BaseObject
   field :remove_user_from_project, mutation: RemoveUserFromProjectMutation
   field :delete_user, mutation: DeleteUserMutation
 
-  ## LOGIN
   field :login, Outputs::UserType, null: true do
     description "Login for users"
     argument :email, String, required: true
@@ -21,7 +20,6 @@ class MutationType < Types::BaseObject
     is_valid_for_auth ? user : nil
   end
 
-  ## TOKEN-LOGIN
   field :token_login, Outputs::UserType, null: true do
     description "JWT token login"
   end
@@ -29,7 +27,6 @@ class MutationType < Types::BaseObject
     context[:current_user]
   end
 
-  ## LOGOUT
   field :logout, Boolean, null: true do
     description "Logout for users"
   end
@@ -41,14 +38,11 @@ class MutationType < Types::BaseObject
     false
   end
 
-  # Uncomment to enable features
-
   field :update_user, Outputs::UserType, null: true do
     description "Update user"
     argument :password, String, required: false
     argument :passwordConfirmation, String, required: false
   end
-
   def update_user(
     password: context[:current_user] ? context[:current_user].password : "",
     password_confirmation: context[:current_user] ? context[:current_user].password_confirmation : ""
@@ -99,27 +93,4 @@ class MutationType < Types::BaseObject
     return false unless user
     user.reset_password(password, password_confirmation)
   end
-
-  #
-  # uncomment for unlock instructions
-  #
-  # UNLOCK ACCOUNT
-  # field :unlock, Boolean, null: false do
-  #   argument :unlockToken, String, required: true
-  # end
-  # def unlock(unlock_token:)
-  #   user = User.unlock_access_by_token(unlock_token)
-  #   return user.id
-  # end
-
-  # RESEND UNLOCK INSTRUCTIONS
-  # field :resend_unlock_instructions, Boolean, null: false do
-  #   argument :email, String, required: true
-  # end
-  # def resend_unlock_instructions(email:)
-  #   user = User.find_by_email(email)
-  #   return false if !user
-
-  #   user.resend_unlock_instructions
-  # end
 end

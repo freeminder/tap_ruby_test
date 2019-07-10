@@ -10,6 +10,6 @@ class DeleteUserMutation < Types::BaseMutation
     authorize user
     user.destroy
 
-    {success: !User.exists?(user.id), errors: user.errors}
+    {success: !User.exists?(user.id), errors: user.errors.full_messages}
   end
 end

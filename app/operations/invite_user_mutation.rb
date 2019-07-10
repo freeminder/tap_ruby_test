@@ -22,7 +22,7 @@ class InviteUserMutation < Types::BaseMutation
     if result
       {success: true, errors: []}
     else
-      {success: false, errors: result.errors}
+      {success: false, errors: result.errors.full_messages}
     end
   end
 end
